@@ -1,9 +1,17 @@
 import { useLayoutEffect } from "react";
-import { Image, View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  Image,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Button,
+} from "react-native";
 
 import { MEALS } from "../data/dummy-data";
 
 import DietaryRequirementLabel from "../components/DietaryRequirementLabel";
+import IconButton from "../components/IconButton";
 
 export default function MealDetailsScreen({ navigation, route }) {
   const mealData = MEALS.find((meal) => {
@@ -11,15 +19,24 @@ export default function MealDetailsScreen({ navigation, route }) {
     return meal.id === mealId;
   });
 
+  function headerButtonPressHandler() {
+    console.log("Pressed!");
+  }
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: mealData.title,
+      headerRight: () => {
+        return (
+          <IconButton
+            icon="star"
+            color="white"
+            onPress={headerButtonPressHandler}
+          />
+        );
+      },
     });
-  }, [navigation, route, MEALS]);
-
-  // imageUrl, ingredients, steps,isGlutenFree
-  // isVegan, isVegetarian, isLactoseFree
-  // duration
+  }, [navigation, route, MEALS, headerButtonPressHandler]);
 
   const {
     isVegan,

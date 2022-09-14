@@ -27,7 +27,6 @@ export default function MealsOverviewScreen({ route, navigation }) {
   }, [categoryId, navigation]);
 
   function onMealPressHandler(mealId) {
-    console.log(mealId);
     navigation.navigate("MealDetails", { mealId });
   }
 
