@@ -2,12 +2,34 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import FavouritesScreen from "./screens/FavouritesScreen";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#B9A44C" },
+        headerTintColor: "white", // color of title and back button
+        sceneContainerStyle: { backgroundColor: "#FFFFFF" },
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{ title: "All Categories" }}
+      />
+      <Drawer.Screen name="Favourites" component={FavouritesScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   /* the first child of Stack.Navigator is the default screen by default */
@@ -23,10 +45,11 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="MealCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
             options={{
-              title: "All Categories", // these settings would override screenOptions settings
+              // these settings would override screenOptions settings
+              headerShown: false,
             }}
           />
           <Stack.Screen

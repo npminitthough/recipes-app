@@ -67,15 +67,15 @@ export default function MealDetailsScreen({ navigation, route }) {
         </View>
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Ingredients</Text>
-          {ingredients.map((thing) => {
-            return <Text>{thing}</Text>;
+          {ingredients.map((thing, i) => {
+            return <Text key={i}>{thing}</Text>;
           })}
         </View>
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Method</Text>
           {steps.map((step, i) => {
             return (
-              <Text style={styles.step}>
+              <Text style={styles.step} key={i}>
                 {i + 1}. {step}
               </Text>
             );
