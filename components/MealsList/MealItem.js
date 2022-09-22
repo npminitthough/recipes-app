@@ -7,6 +7,8 @@ import {
   Platform,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+
 export default function MealItem({
   id,
   title,
@@ -14,14 +16,19 @@ export default function MealItem({
   duration,
   complexity,
   affordability,
-  onPress, // or instead of passing handler, use useNavigation hook in this component and create a handler
 }) {
+  const navigation = useNavigation();
+
+  function onMealPressHandler() {
+    navigation.navigate("MealDetails", { mealId: id });
+  }
+
   return (
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: "#ccc" }}
         styles={({ pressed }) => (pressed ? styles.buttonPressed : null)}
-        onPress={onPress.bind(this, id)}
+        onPress={onMealPressHandler}
       >
         <View style={styles.innerContainer}>
           <View>

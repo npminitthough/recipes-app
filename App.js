@@ -10,6 +10,8 @@ import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
 import FavouritesScreen from "./screens/FavouritesScreen";
 
+import FavouritesContextProvider from "./store/context/favourites-context";
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -53,43 +55,45 @@ export default function App() {
   return (
     <>
       <StatusBar style="dark" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#B9A44C" },
-            headerTintColor: "white", // color of title and back button
-            contentStyle: { backgroundColor: "#FFFFFF" },
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{
-              // these settings would override screenOptions settings
-              headerShown: false,
+      <FavouritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#B9A44C" },
+              headerTintColor: "white", // color of title and back button
+              contentStyle: { backgroundColor: "#FFFFFF" },
             }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            // One way to have a dynamic title:
-            // options={({ route, navigation }) => {
-            //   const categoryId = route.params.categoryId;
-            //   return { title: categoryId };
-            // }}
-          />
-          <Stack.Screen
-            name="MealDetails"
-            component={MealDetailsScreen}
-            // Can use this if you don't need to interact with the MealDetails screen component
-            // options={{
-            //   headerRight: () => {
-            //     return <Button title="Tap me!" />;
-            //   },
-            // }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              name="Drawer"
+              component={DrawerNavigator}
+              options={{
+                // these settings would override screenOptions settings
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+              // One way to have a dynamic title:
+              // options={({ route, navigation }) => {
+              //   const categoryId = route.params.categoryId;
+              //   return { title: categoryId };
+              // }}
+            />
+            <Stack.Screen
+              name="MealDetails"
+              component={MealDetailsScreen}
+              // Can use this if you don't need to interact with the MealDetails screen component
+              // options={{
+              //   headerRight: () => {
+              //     return <Button title="Tap me!" />;
+              //   },
+              // }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavouritesContextProvider>
     </>
   );
 }

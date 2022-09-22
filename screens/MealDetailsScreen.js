@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useContext } from "react";
 import {
   Image,
   View,
@@ -13,14 +13,25 @@ import { MEALS } from "../data/dummy-data";
 import DietaryRequirementLabel from "../components/DietaryRequirementLabel";
 import IconButton from "../components/IconButton";
 
+import { FavouritesContext } from "../store/context/favourites-context";
+
 export default function MealDetailsScreen({ navigation, route }) {
+  const favouriteMealsCtx = useContext(FavouritesContext);
+  console.log(favouriteMealsCtx.ids);
+  const mealId = route.params.mealId;
+
+  const isFavourited = favouriteMealsCtx.ids.includes(mealId);
+
   const mealData = MEALS.find((meal) => {
-    const mealId = route.params.mealId;
     return meal.id === mealId;
   });
 
-  function headerButtonPressHandler() {
-    console.log("Pressed!");
+  function changeFavouriteStatusHandler() {
+    if (isFavourited) {
+      favouriteMealsCtx.removeFavourite(mealId);
+    } else {
+      favouriteMealsCtx.addFavourite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
@@ -29,14 +40,14 @@ export default function MealDetailsScreen({ navigation, route }) {
       headerRight: () => {
         return (
           <IconButton
-            icon="star"
+            icon={isFavourited ? "star" : "star-outline"}
             color="white"
-            onPress={headerButtonPressHandler}
+            onPress={changeFavouriteStatusHandler}
           />
         );
       },
     });
-  }, [navigation, route, MEALS, headerButtonPressHandler]);
+  }, [navigation, route, MEALS, changeFavouriteStatusHandler]);
 
   const {
     isVegan,
