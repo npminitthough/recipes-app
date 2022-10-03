@@ -1,18 +1,21 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-import { FavouritesContext } from "../store/context/favourites-context";
+// import { FavouritesContext } from "../store/context/favourites-context";
 import MealsList from "../components/MealsList";
 
 import { MEALS } from "../data/dummy-data";
 
 export default function FavouritesScreen() {
   const navigation = useNavigation();
-  const favouriteMealsCtx = useContext(FavouritesContext);
+  //   const favouriteMealsCtx = useContext(FavouritesContext);
+  const favouriteMealIds = useSelector((state) => state.favouriteMeals.ids);
 
   const favouritedMeals = MEALS.filter((meal) =>
-    favouriteMealsCtx.ids.includes(meal.id)
+    // favouriteMealsCtx.ids.includes(meal.id)
+    favouriteMealIds.includes(meal.id)
   );
 
   function onPress() {
